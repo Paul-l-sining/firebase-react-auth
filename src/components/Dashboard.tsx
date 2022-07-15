@@ -1,10 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Card, Button, Alert } from 'react-bootstrap';
+import { Link, useNavigate,  } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 function Dashboard() {
+
+    const [error, setError] = useState<String>("");
+    const { currentUser, logout } = useAuth();
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        setError("");
+
+        try {
+            await logout();
+            navigate("/login");
+        } catch (e:any) {
+            setError(e.message);
+        }
+    }
+
     return (
-        <div>
-            DashBoard
-        </div>
+        <>
+            <Card className="p-3">
+            <h2 className="text-center my-4">Profile</h2>
+            {error && <Alert variant='danger'>{error}</Alert>}
+            <span className='mb-3'><strong>Email:</strong>{currentUser?.email}</span>
+            <Link to="/update-profile" className='btn btn-primary my-2'>Update</Link>
+            </Card>
+            <div className="w-100 text-center mt-2">
+                <Button variant='link' onClick={handleLogout}>Log Out</Button>
+            </div>
+        </>
     );
 }
 

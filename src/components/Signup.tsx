@@ -24,8 +24,8 @@ function Signup(){
             setLoading(true);
             await signup(emailRef.current?.value, passwordRef.current?.value); 
             navigate('/login')
-        } catch (error) {
-            setError('Failed to create an account')
+        } catch (e:any) {
+            setError(e.message)
         }
         setLoading(false);
     }
