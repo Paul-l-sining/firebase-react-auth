@@ -1,0 +1,4 @@
+Problems to be fixed: 
+    1. user can still go to login page after it is logged. 
+    2. get rid of underline in <Link />
+    

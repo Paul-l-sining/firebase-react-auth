@@ -8,6 +8,7 @@ import Login from './Login';
 import NotFound from './NotFound';
 import PrivateRoute from './PrivateRoute';
 import ForgetPassword from './ForgetPassword';
+import UpdateProfile from './UpdateProfile';
  
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
               <Route path='/login' element={<Login />}></Route>
               <Route path='/not-found' element={<NotFound/>}></Route>
               <Route path='/forget-password' element={<ForgetPassword/>}></Route>
+              <Route path='/update-profile' element={<UpdateProfile/>}></Route>
               <Route path='/*' element={<Navigate replace to='/not-found' />} ></Route>
             </Routes>
           </Router>
