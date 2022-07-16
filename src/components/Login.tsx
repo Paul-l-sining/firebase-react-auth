@@ -2,14 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Form, Button, Card, Alert } from 'react-bootstrap';
 import { useAuth } from '../contexts/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
-
+import { toastError } from './Toastify';
 
 function Login() {
  
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
     const { login, currentUser } = useAuth();
-    const [error, setError] = useState<String>("");
+    const [error, setError] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
     const navigate = useNavigate();
 
@@ -28,14 +28,17 @@ function Login() {
         setLoading(false);
     }
 
+    if (currentUser) return <>{navigate("/")}</>
+
+    if (error) toastError(error)
+
     return (
     <> 
        <Card>
         <Card.Body>
             <h2 className="text-center my-4">Log In</h2>
-            {currentUser?.email}
             <Form onSubmit={handleSubmit}>
-            {error && <Alert variant='danger' >{error}</Alert>}
+            {error && <Alert variant='danger'>{error}</Alert>}
             <Form.Group id='email' className='mb-2'>
                 <Form.Label>Email</Form.Label>
                 <Form.Control type='email' ref={emailRef} required ></Form.Control>
@@ -47,12 +50,12 @@ function Login() {
             <Button disabled={loading} className='w-100 my-4' type='submit'>Log In</Button>
             </Form>
             <div className="w-100 text-center mb-2">
-            <Link to='/forget-password'>Forget Password?</Link> 
+                <Link className='no_underline' to='/forget-password'>Forget Password?</Link> 
             </div>
         </Card.Body>
        </Card>
        <div className="w-100 text-center mt-2">
-            Need an account? <Link to='/signup'>Sign Up</Link> 
+            Need an account? <Link className='no_underline' to='/signup'>Sign Up</Link> 
        </div>
     </>
     );

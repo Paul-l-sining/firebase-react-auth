@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { Form, Button, Card, Alert } from 'react-bootstrap';
 import { useAuth } from '../contexts/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
+import { toastError } from './Toastify';
 
 function UpdateProfile() {
 
@@ -9,8 +10,8 @@ function UpdateProfile() {
     const passwordRef = useRef<HTMLInputElement>(null);
     const passwordConfirmRef = useRef<HTMLInputElement>(null);
     const { changeEmail, changePassword, currentUser } = useAuth();
-    const [error, setError] = useState<String>("");
-    const [message, setMessage] = useState<String>("");
+    const [error, setError] = useState<string>("");
+    const [message, setMessage] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
     const navigate = useNavigate();
 
@@ -41,6 +42,8 @@ function UpdateProfile() {
 
     }
 
+    if (error) toastError(error)
+
     return (
     <> 
        <Card>
@@ -48,7 +51,6 @@ function UpdateProfile() {
             <h2 className="text-center my-4">Profile Update</h2>
             <Form onSubmit={handleSubmit}>
             {error && <Alert variant='danger' >{error}</Alert>}
-            {message && <Alert variant='success' >{message}</Alert>}
             <Form.Group id='email' className='mb-2'>
                 <Form.Label>Email</Form.Label>
                 <Form.Control type='email' 
@@ -70,7 +72,7 @@ function UpdateProfile() {
         </Card.Body>
        </Card>
        <div className="w-100 text-center mt-2">
-           <Link to='/'>Cancel</Link> 
+           <Link className='no_underline' to='/'>Cancel</Link> 
        </div>
     </>
     );

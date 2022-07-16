@@ -9,11 +9,15 @@ import NotFound from './NotFound';
 import PrivateRoute from './PrivateRoute';
 import ForgetPassword from './ForgetPassword';
 import UpdateProfile from './UpdateProfile';
+import Toastify from './Toastify';
+
+import '../app.css'
  
 function App() {
 
   return (
     <AuthProvider>
+      <Toastify />
       <Container
       className="d-flex align-items-center justify-content-center"
       style={{ minHeight: "100vh" }}

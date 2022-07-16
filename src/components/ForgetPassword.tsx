@@ -2,13 +2,14 @@ import React, { useRef, useState } from 'react';
 import { Form, Button, Card, Alert } from 'react-bootstrap';
 import { useAuth } from '../contexts/AuthContext';
 import { Link } from 'react-router-dom';
+import { toastError, toastSuccess } from './Toastify';
 
 function ForgetPassword() {
 
     const emailRef = useRef<HTMLInputElement>(null);
     const { resetPassword, currentUser } = useAuth();
-    const [error, setError] = useState<String>("");
-    const [message, setMessage] = useState<String>("");
+    const [error, setError] = useState<string>("");
+    const [message, setMessage] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
 
 
@@ -21,19 +22,21 @@ function ForgetPassword() {
             setMessage("");
             await resetPassword(emailRef.current?.value);
             setMessage("Check your inbox for further instructions");
-            setLoading(false);  
         } catch (e:any) {
             setError(e.message);
         }
+        setLoading(false);  
 
     }
+
+    if (error) toastError(error);
+    if (message) toastSuccess(message);
 
     return (
     <> 
        <Card>
         <Card.Body>
             <h2 className="text-center my-4">Password Reset</h2>
-            {currentUser?.email}
             <Form onSubmit={handleSubmit}>
             {error && <Alert variant='danger' >{error}</Alert>}
             {message && <Alert variant='success' >{message}</Alert>}
@@ -44,12 +47,12 @@ function ForgetPassword() {
             <Button disabled={loading} className='w-100 my-4' type='submit'>Reset Password</Button>
             </Form>
             <div className="w-100 text-center mb-2">
-            <Link className='link' to='/login'>Login</Link> 
+            <Link className='no_underline' to='/login'>Login</Link> 
             </div>
         </Card.Body>
        </Card>
        <div className="w-100 text-center mt-2">
-            Need an account? <Link to='/signup'>Sign Up</Link> 
+            Need an account? <Link className='no_underline' to='/signup'>Sign Up</Link> 
        </div>
     </>
     );

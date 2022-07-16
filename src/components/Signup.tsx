@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { Form, Button, Card, Alert } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { toastError } from './Toastify';
 
 function Signup(){
     
@@ -9,7 +10,7 @@ function Signup(){
     const passwordRef = useRef<HTMLInputElement>(null);
     const passwordConfirmRef = useRef<HTMLInputElement>(null);
     const { signup, currentUser } = useAuth();
-    const [error, setError] = useState<String>("");
+    const [error, setError] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
     const navigate = useNavigate();
 
@@ -30,11 +31,14 @@ function Signup(){
         setLoading(false);
     }
 
+    if (currentUser) return <>{navigate("/")}</>
+
+    if (error) toastError(error)
+
     return (
     <> 
        <Card className="p-3">
         <h2 className="text-center my-4">Sign Up</h2>
-        {currentUser?.email}
        <Form onSubmit={handleSubmit}>
         {error && <Alert variant='danger' >{error}</Alert>}
         <Form.Group id='email' className='mb-2'>
@@ -53,7 +57,7 @@ function Signup(){
        </Form>
        </Card>
        <div className="w-100 text-center mt-2">
-            Already have an account? <Link to='/login'>Log In</Link> 
+            Already have an account? <Link className='no_underline' to='/login'>Log In</Link> 
        </div>
     </>
     );
