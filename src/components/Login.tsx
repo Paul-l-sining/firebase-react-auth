@@ -28,7 +28,10 @@ function Login() {
         setLoading(false);
     }
 
-    if (currentUser) return <>{navigate("/")}</>
+    useEffect(() => {
+        currentUser && <>{navigate("/")}</> 
+    })
+
 
     if (error) toastError(error)
 

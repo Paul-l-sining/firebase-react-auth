@@ -11,7 +11,7 @@ import ForgetPassword from './ForgetPassword';
 import UpdateProfile from './UpdateProfile';
 import Toastify from './Toastify';
 
-import '../app.css'
+import '../App.css'
  
 function App() {
 

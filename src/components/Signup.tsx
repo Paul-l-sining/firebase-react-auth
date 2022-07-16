@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Form, Button, Card, Alert } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
@@ -13,6 +13,10 @@ function Signup(){
     const [error, setError] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        currentUser && <>{navigate("/")}</> 
+    })
 
     const handleSubmit = async (e:React.FormEvent) => {
         e.preventDefault();
@@ -30,8 +34,6 @@ function Signup(){
         }
         setLoading(false);
     }
-
-    if (currentUser) return <>{navigate("/")}</>
 
     if (error) toastError(error)
 
