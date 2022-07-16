@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signOut, updateEmail, updatePassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateEmail, updatePassword } from 'firebase/auth';
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
@@ -12,6 +12,18 @@ const AuthContext = React.createContext<any>(null);
 export function useAuth() {
     return useContext(AuthContext);
 }
+
+const provider = new GoogleAuthProvider();
+
+export const signInWithGoogle = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
 
 interface AuthProviderProps {
