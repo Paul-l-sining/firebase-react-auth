@@ -26,7 +26,9 @@ function Dashboard() {
             <h2 className="text-center my-4">Profile</h2>
             {error && <Alert variant='danger'>{error}</Alert>}
             <span className='mb-3'><strong>Email:</strong>{currentUser?.email}</span>
-            <Link to="/update-profile" className='btn btn-primary my-2 no_underline'>Update</Link>
+            {!currentUser.emailVerified ? 
+            <Link to="/update-profile" className='btn btn-primary my-2 no_underline'>Update</Link> : 
+            <span className='mb-3'><strong>Name:</strong>{currentUser?.displayName}</span>}
             </Card>
             <div className="w-100 text-center mt-2">
                 <Button className='no_underline' variant='link' onClick={handleLogout}>Log Out</Button>

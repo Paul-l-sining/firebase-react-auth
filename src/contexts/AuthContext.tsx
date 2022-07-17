@@ -13,19 +13,6 @@ export function useAuth() {
     return useContext(AuthContext);
 }
 
-const provider = new GoogleAuthProvider();
-
-export const signInWithGoogle = () => {
-    signInWithPopup(auth, provider)
-      .then((result) => {
-
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-
 interface AuthProviderProps {
     children: any;
 }
@@ -59,13 +46,19 @@ const AuthProvider = ({ children } : AuthProviderProps) => {
         return updatePassword(currentUser, newPassword);
     }
 
+    function googleSignIn() {
+        const provider = new GoogleAuthProvider();
+        return signInWithPopup(auth, provider); 
+    }
+
+
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, user => {
-            setCurrentUser(user);
+            setCurrentUser(user);            
         })
 
         return unsubscribe;
-    }, [])
+    }, [currentUser])
 
     const value = {
         currentUser, 
@@ -74,7 +67,8 @@ const AuthProvider = ({ children } : AuthProviderProps) => {
         logout,
         resetPassword,
         changeEmail,
-        changePassword
+        changePassword, 
+        googleSignIn
     }
 
     return (
